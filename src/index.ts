@@ -50,7 +50,7 @@ console.log(process.env.PRIVATE_KEY);
         JSON.stringify({ nextIndex: i + 1 }, null, 2),
         'utf8'
       );
-      console.log(`Waiting 5-15 seconds, ${i + 1} words done...`);
+      console.log(`Waiting 6-19 seconds, ${i + 1} words done...`);
       await sleep(randomNumberBetween(6, 19) * MS_TO_SECONDS);
     }
     await fs.writeFile(
