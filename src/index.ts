@@ -1,4 +1,4 @@
-import words from './board.json';
+import words from '../board.json';
 import { nextIndex } from '../config.json';
 import { ethers } from 'ethers';
 import 'dotenv/config';

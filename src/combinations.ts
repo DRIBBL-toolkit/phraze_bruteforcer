@@ -1,4 +1,4 @@
-import combinations from './combos.json';
+import combinations from '../combos.json';
 import { nextIndex } from '../config.json';
 import { ethers } from 'ethers';
 import 'dotenv/config';
