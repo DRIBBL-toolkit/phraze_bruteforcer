@@ -31,8 +31,14 @@ const getPuzzle = async (token: string) => {
   return request.data;
 };
 
-const getClueById = async (puzzle: Phraze, id: number) => {
-  return puzzle.puzzles[0].clues[id - 1];
+const getClueById = async (
+  puzzle: Phraze,
+  id: number,
+  board: 'blue' | 'red'
+) => {
+  return puzzle.puzzles.find(
+    (puzzle) => puzzle.game.name.toLowerCase() == board
+  )!.clues[id - 1];
 };
 
 const checkGuess = async (
@@ -69,7 +75,7 @@ const checkGuess = async (
 
 const checkSideQuest = async (
   token: string,
-  board: string,
+  board: 'blue' | 'red',
   clueUUID: string,
   guess: string
 ) => {
@@ -89,9 +95,9 @@ const checkSideQuest = async (
     }
   );
 
-  const guessObject = request.data[0].clues.find(
-    ({ uuid }: { uuid: string }) => uuid === clueUUID
-  );
+  const guessObject = request.data
+    .find((x) => x.game.name.toLowerCase() === board)!
+    .clues.find(({ uuid }: { uuid: string }) => uuid === clueUUID);
 
   if (guessObject)
     if (guessObject.checkpoint_guess)
