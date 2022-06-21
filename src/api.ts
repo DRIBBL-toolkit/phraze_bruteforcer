@@ -43,7 +43,7 @@ const getClueById = async (
 
 const checkGuess = async (
   token: string,
-  board: string,
+  board: 'blue' | 'red',
   clueUUID: string,
   guess: string
 ) => {
@@ -62,10 +62,9 @@ const checkGuess = async (
       },
     }
   );
-
-  const guessObject = request.data[0].clues.find(
-    ({ uuid }: { uuid: string }) => uuid === clueUUID
-  );
+  const guessObject = request.data
+    .find((x) => x.game.name.toLowerCase() === board)!
+    .clues.find(({ uuid }: { uuid: string }) => uuid === clueUUID);
 
   return {
     correct: guessObject?.guess?.correct || false,

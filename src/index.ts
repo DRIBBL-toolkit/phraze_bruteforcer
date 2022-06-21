@@ -20,9 +20,7 @@ const randomNumberBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-console.log(process.env.PRIVATE_KEY);
-
-const oneAccountMode = async ({ BOARD_TYPE, CLUE_ID }: questParams) => {
+const sideQuest = async ({ BOARD_TYPE, CLUE_ID }: questParams) => {
   if (!process.env.PRIVATE_KEY) return;
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
   const signature = await wallet.signMessage(MESSAGE);
@@ -151,9 +149,24 @@ const getSignatureBody = async (wallet: Wallet) => {
 
 const settings: questParams = {
   BOARD_TYPE: 'red',
-  CLUE_ID: 12,
-  sideQuestAnswer: '1725',
+  CLUE_ID: 18,
 };
 
-mainQuest(settings);
-// oneAccountMode(settings);
+(async () => {
+  if (!process.env.PRIVATE_KEY) return;
+  const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
+  const signature = await wallet.signMessage(MESSAGE);
+  const body = {
+    address: wallet.address,
+    message: MESSAGE,
+    signature,
+  };
+
+  console.log(body);
+
+  const authToken = await getAuthToken(body);
+  console.log(authToken);
+})();
+
+// mainQuest(settings);
+// sideQuest(settings);
